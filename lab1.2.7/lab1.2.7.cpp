@@ -1,14 +1,17 @@
 ﻿#include <stdio.h>
+#include <conio.h>
 #include <iostream>
 #include <string>
-using namespace std;
+#include "windows.h"
 
+using namespace std;
 
 struct node
 {
     char Data;
     node* next;
 };
+
 int queue_empty(node* pFirst) {
     if (pFirst == NULL)
     {
@@ -19,6 +22,7 @@ int queue_empty(node* pFirst) {
         return 0;
     }
 }
+
 void push(node** pFirst, node** pLast, char data) {
     node* temp;
     temp = new node();
@@ -34,16 +38,7 @@ void push(node** pFirst, node** pLast, char data) {
         *pLast = temp;
     }
 }
-//
-//void push_random(node** top, int N) {
-//    srand(time(NULL));
-//    int data;
-//    for (int i = 0; i < N; i++) {
-//        data = rand() % 99 + 1;
-//        push(top, data);
-//    }
-//
-//}
+
 void pop(node** pFirst) {
     if (queue_empty(*pFirst))
     {
@@ -53,6 +48,8 @@ void pop(node** pFirst) {
     {
         node* temp = *pFirst;
         *pFirst = temp->next;
+        temp->Data = NULL;
+        temp->next = nullptr;
         delete temp;
     }
 
@@ -60,48 +57,76 @@ void pop(node** pFirst) {
 
 void print(node* pFirst) {
     node* temp = pFirst;
-    while (temp != NULL)
+    if (queue_empty(pFirst))
     {
-        cout << temp->Data << " ";
-        temp = temp->next;
+        cout << "Queue is empty" << endl;
     }
-    cout << endl;
+    else
+    {
+        while (temp != NULL)
+        {
+            cout << temp->Data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
 }
 
-/*bool getNumber(int* i)
-{
-    bool flag = true;
-    while (flag)
-    {
-        flag = false;
-        string str;
-        cin >> str;
-        for (char c : str)
-        {
-            if (c < '0' || c >'9')
-            {
-                std::cout << "incorrect input\nTry again\n->";
-                flag = true;
-                break;
+void modeling(node **pFirst, node **pLast) {
+    cout << "\nQUEUE MODELING\n";
+    char key = '\0'; //null
+    char symbol;
+    int n, x; // х - действие: 0 - удаление, 1 - добавление
+    cout << "Press <q> to quit the queue simulation mode\n";
+    while (key != 'q') {
+        Sleep(2);
+        if (queue_empty(*pFirst)) x = 1; 
+        else x = (rand() % 100 % 2 == 0);
+
+        if (x == 1) {
+            n = rand() % 3 + 1;
+
+            if (_kbhit()) 
+                key = _getch();
+            if (key == 'q') break;
+                cout << "\nGeneration and addition " << n << " item(s) to queue\n";
+            Sleep(800);
+            for (int i = 0; i < n; i++) {
+                symbol = static_cast<char>(65 + rand() % 26);
+                push(pFirst, pLast, symbol);
             }
         }
-
-        if (flag == false)
-        {
-            try
-            {
-                *i = stoi(str);
-            }
-            catch (out_of_range)
-            {
-                cout << "�������� ����\n������� ������� ��������\n��������� ����\n->";
-                flag = true;
-            }
-
+        else { // удаление
+            n = rand() % 4 + 1; 
+//            n = rand() % 4 + 1;
+            if (_kbhit()) 
+                key = _getch(); 
+            if (key == 'q') break;
+            cout << "\nRemoval " << n << " item (s) from the queue...\n";
+            Sleep(800);
+            for (int i = 0; i < n; i++)
+                if (!queue_empty(*pFirst))
+                    pop(pFirst);
         }
+        cout << "Press <q> to quit the queue simulation mode\n";
+        if (_kbhit())
+            key = _getch(); 
+        if (key == 'q') break;
+        cout << "Queue state: ";
+        if (_kbhit()) key = _getch();
+        print(*pFirst);
     }
-    return flag;
-}*/
+}
+
+int ft_input()
+{
+    string str;
+    cin >> str;
+    if (str.length() != 1)
+    {
+        return 9;
+    }
+}
 
 int main()
 {
@@ -114,6 +139,7 @@ int main()
     char a;
     int  b;
     int  c;
+    char d;
     a = '0';
     while (a != 'q') {
 
@@ -121,6 +147,7 @@ int main()
         cout << "Add element..........................2" << endl;
         cout << "Delete element.......................3" << endl;
         cout << "Print queue..........................4" << endl;
+        cout << "Queue modeling.......................5" << endl;
 
         b = 1 + rand() % 100;
 
@@ -140,14 +167,17 @@ int main()
             break;
         case 2:
             cout << "Enter element: ";
-            cin >> b;
-            push(&pFirst, &pLast, b);
+            cin >> d;
+            push(&pFirst, &pLast, d);
             break;
         case 3:
             pop(&pFirst);
             break;
         case 4:
             print(pFirst);
+            break;
+        case 5:
+            modeling(&pFirst, &pLast);
             break;
         }
     }
