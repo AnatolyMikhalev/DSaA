@@ -1,4 +1,5 @@
-﻿#include <stdio.h>
+﻿//Написать программу для моделирования работы очереди со случайным числом добавляемых и удаляемых элементов.
+#include <stdio.h>
 #include <conio.h>
 #include <iostream>
 #include <string>
@@ -153,32 +154,39 @@ int main()
 
         cin >> c;
 
-        switch (c)
+        if (c < 1 || c > 5) 
         {
-        case 1:
-            if (queue_empty(pFirst))
+            cout << "Incorrect value" << endl;
+        }
+        else
+        {
+            switch (c)
             {
-                cout << "Queue is empty" << endl;
+            case 1:
+                if (queue_empty(pFirst))
+                {
+                    cout << "Queue is empty" << endl;
+                }
+                else
+                {
+                    cout << "Queue isn't empty" << endl;
+                }
+                break;
+            case 2:
+                cout << "Enter element: ";
+                cin >> d;
+                push(&pFirst, &pLast, d);
+                break;
+            case 3:
+                pop(&pFirst);
+                break;
+            case 4:
+                print(pFirst);
+                break;
+            case 5:
+                modeling(&pFirst, &pLast);
+                break;
             }
-            else
-            {
-                cout << "Queue isn't empty" << endl;
-            }
-            break;
-        case 2:
-            cout << "Enter element: ";
-            cin >> d;
-            push(&pFirst, &pLast, d);
-            break;
-        case 3:
-            pop(&pFirst);
-            break;
-        case 4:
-            print(pFirst);
-            break;
-        case 5:
-            modeling(&pFirst, &pLast);
-            break;
         }
     }
 }

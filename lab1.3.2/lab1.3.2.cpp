@@ -1,8 +1,9 @@
-﻿//Реализовать программу, выполняющую стандартный набор операций с кольцевой очередью на основе массива
+﻿//Реализовать программу для простейшего моделирования линейного списка с помощью массива
 
 #include <stdio.h>;
 #include <iostream>
 #include <string>
+#define SIZE 2
 
 using namespace std;
 
@@ -11,27 +12,29 @@ int queue_empty(int N) {
     {
         return 1;
     }
-    else if (N != 10)
+    else if (N != SIZE)
     {
         return 2;
     }
-    else if (N == 10) {
+    else if (N == SIZE) {
         return 0;
     }
 }
+
 void push(int sp[], int& Last, int data, int& N) {
-    if (queue_empty(N) == 0) {
-        cout << "Очередь заполнена" << endl;
-    }
-    else if (N == 0) {
+    if (N == 0)
+    {
         sp[Last] = data;
         N++;
     }
-    else {
-        if (Last == 9) {
+    else
+    {
+        if (Last == SIZE - 1)
+        {
             Last = 0;
         }
-        else {
+        else
+        {
             Last++;
         }
         sp[Last] = data;
@@ -39,16 +42,17 @@ void push(int sp[], int& Last, int data, int& N) {
     }
 }
 
-
-void pop(int* sp, int& First, int& N) {
-    if (queue_empty(N) == 1) {
-        cout << "Очередь пуста" << endl;
+void pop(int* sp, int& First, int& N)
+{
+    if (queue_empty(N) == 1)
+    {
+        cout << "Queue is empty" << endl;
     }
     else
     {
-        cout << "Удалён - " << sp[First] << endl;
+        cout << "Removed - " << sp[First] << endl;
         sp[First] = 0;
-        if (First == 9) {
+        if (First == SIZE - 1) {
             First = 0;
         }
         else {
@@ -58,8 +62,9 @@ void pop(int* sp, int& First, int& N) {
     }
 }
 
-void print(int sp[], int First, int Last) {
-
+void print(int sp[], int First, int Last)
+{
+    int i = 0;
     while (First != Last)
     {
         cout << sp[First] << " ";
@@ -75,6 +80,7 @@ void print(int sp[], int First, int Last) {
     }
     cout << endl;
 }
+
 bool getNumber(int* i)
 {
     bool flag = true;
@@ -87,7 +93,7 @@ bool getNumber(int* i)
         {
             if (c < '0' || c >'9')
             {
-                std::cout << "Неверный ввод\nПовторите ввод\n->";
+                std::cout << "Invalid entry \nRepeat entry\n->";
                 flag = true;
                 break;
             }
@@ -101,7 +107,7 @@ bool getNumber(int* i)
             }
             catch (out_of_range)
             {
-                cout << "Неверный ввод\nслишком большое значение\nПовторите ввод\n->";
+                cout << "Invalid entry \ntoo large value \nRepeat entry\n->";
                 flag = true;
             }
 
@@ -113,45 +119,52 @@ bool getNumber(int* i)
 void main()
 {
     setlocale(LC_ALL, "Rus");
-    int sp[10];
+    int sp[SIZE];
     int First = 0;
     int Last = 0;
     int N = 0;
+    char a;
+    int b;
 
     while (true) {
 
-        cout << "Проверка пустоты очереди............................1" << endl;
-        cout << "Добавление элемента в вершину очереди...............2" << endl;
-        cout << "Удаление элемента из начала очереди.................3" << endl;
-        cout << "Вывод текущего состояния очереди на экран...........4" << endl;
+        cout << "Check for empty......................1" << endl;
+        cout << "Add element..........................2" << endl;
+        cout << "Delete element.......................3" << endl;
+        cout << "Print queue..........................4" << endl;
 
-        char a;
-        int b;
         cin >> a;
-        if (a < '1' || a > '4') {
-            cout << "Неверное значение" << endl;
-        }
-        else {
+        if (a < '1' || a > '4')
+            cout << "Incorrect value" << endl;
+        else
+        {
             switch (a)
             {
             case '1':
                 if (queue_empty(N) == 0)
                 {
-                    cout << "Очередь заполнена" << endl;
+                    cout << "Queue is full" << endl;
                 }
                 else if (queue_empty(N) == 1)
                 {
-                    cout << "Очередь пуста" << endl;
+                    cout << "Queue is empty" << endl;
                 }
                 else
                 {
-                    cout << "Очередь не пуста" << endl;
+                    cout << "Queue isn't empty" << endl;
                 }
                 break;
             case '2':
-                cout << "Введите элемент: ";
-                if (!getNumber(&b)) {
-                    push(sp, Last, b, N);
+                if (queue_empty(N) == 0)
+                {
+                    cout << "Queue is full" << endl;
+                }
+                else
+                {
+                    cout << "Enter element: ";
+                    if (!getNumber(&b)) {
+                        push(sp, Last, b, N);
+                    }
                 }
                 break;
             case '3':
