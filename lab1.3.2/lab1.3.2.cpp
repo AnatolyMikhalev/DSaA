@@ -3,11 +3,27 @@
 #include <stdio.h>;
 #include <iostream>
 #include <string>
-#define SIZE 2
+#define SIZE 10
 
 using namespace std;
 
-int queue_empty(int N) {
+typedef struct s_list
+{
+    int data;
+} t_list;
+
+void zeroing(t_list sp[])
+{
+    int i = 0;
+    while (i < SIZE)
+    {
+        sp[i].data = -1;
+        i++;
+    }
+}
+
+int queue_empty(int N)
+{
     if (N == 0)
     {
         return 1;
@@ -21,28 +37,33 @@ int queue_empty(int N) {
     }
 }
 
-void push(int sp[], int& Last, int data, int& N) {
+void push(t_list sp[], int data, int& N)
+{
+    int temp;
+    int j;
+    int i = 0;
+
     if (N == 0)
     {
-        sp[Last] = data;
+        sp[i].data = data;
         N++;
     }
     else
     {
-        if (Last == SIZE - 1)
+        while (sp[i].data <= data && i < N)
+            i++;
+        j = N;
+        while (j > i)
         {
-            Last = 0;
+            sp[j].data = sp[j - 1].data;
+            j--;
         }
-        else
-        {
-            Last++;
-        }
-        sp[Last] = data;
+        sp[i].data = data;
         N++;
     }
 }
 
-void pop(int* sp, int& First, int& N)
+void pop(t_list* sp, int& First, int& N)
 {
     if (queue_empty(N) == 1)
     {
@@ -50,33 +71,27 @@ void pop(int* sp, int& First, int& N)
     }
     else
     {
-        cout << "Removed - " << sp[First] << endl;
-        sp[First] = 0;
-        if (First == SIZE - 1) {
+        cout << "Removed - " << sp[First].data << endl;
+        sp[First].data = 0;
+        if (First == SIZE - 1)
+        {
             First = 0;
         }
-        else {
+        else
+        {
             First++;
         }
         N--;
     }
 }
 
-void print(int sp[], int First, int Last)
+void print(t_list sp[], int N)
 {
     int i = 0;
-    while (First != Last)
+    while (i < N)
     {
-        cout << sp[First] << " ";
-        if (First == 9) {
-            First = 0;
-        }
-        else {
-            First++;
-        }
-    }
-    if (First == Last) {
-        cout << sp[First] << " ";
+        cout << sp[i].data << " ";
+        i++;
     }
     cout << endl;
 }
@@ -91,7 +106,7 @@ bool getNumber(int* i)
         cin >> str;
         for (char c : str)
         {
-            if (c < '0' || c >'9')
+            if (c < '0' || c > '9')
             {
                 std::cout << "Invalid entry \nRepeat entry\n->";
                 flag = true;
@@ -118,14 +133,14 @@ bool getNumber(int* i)
 
 void main()
 {
-    setlocale(LC_ALL, "Rus");
-    int sp[SIZE];
+    t_list sp[SIZE];
     int First = 0;
     int Last = 0;
     int N = 0;
     char a;
-    int b;
+    int data;
 
+    zeroing(sp);
     while (true) {
 
         cout << "Check for empty......................1" << endl;
@@ -135,7 +150,7 @@ void main()
 
         cin >> a;
         if (a < '1' || a > '4')
-            cout << "Incorrect value" << endl;
+            cout << "Incorrect entry" << endl;
         else
         {
             switch (a)
@@ -162,8 +177,9 @@ void main()
                 else
                 {
                     cout << "Enter element: ";
-                    if (!getNumber(&b)) {
-                        push(sp, Last, b, N);
+                    if (!getNumber(&data))
+                    {
+                        push(sp, data, N);
                     }
                 }
                 break;
@@ -171,7 +187,11 @@ void main()
                 pop(sp, First, N);
                 break;
             case '4':
-                print(sp, First, Last);
+                if (queue_empty(N) == 1)
+                {
+                    cout << "Queue is empty" << endl;
+                }
+                else print(sp, N);
                 break;
             }
         }

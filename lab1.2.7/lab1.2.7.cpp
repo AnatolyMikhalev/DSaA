@@ -75,9 +75,9 @@ void print(node* pFirst) {
 
 void modeling(node **pFirst, node **pLast) {
     cout << "\nQUEUE MODELING\n";
-    char key = '\0'; //null
+    char key = '\0';
     char symbol;
-    int n, x; // х - действие: 0 - удаление, 1 - добавление
+    int n, x; 
     cout << "Press <q> to quit the queue simulation mode\n";
     while (key != 'q') {
         Sleep(2);
@@ -97,7 +97,7 @@ void modeling(node **pFirst, node **pLast) {
                 push(pFirst, pLast, symbol);
             }
         }
-        else { // удаление
+        else { 
             n = rand() % 4 + 1; 
 //            n = rand() % 4 + 1;
             if (_kbhit()) 
