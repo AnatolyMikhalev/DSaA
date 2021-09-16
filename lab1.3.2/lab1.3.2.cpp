@@ -9,7 +9,7 @@ using namespace std;
 
 typedef struct s_list
 {
-    int data;
+    string data;
 } t_list;
 
 void zeroing(t_list sp[])
@@ -37,7 +37,7 @@ int queue_empty(int N)
     }
 }
 
-void push(t_list sp[], int data, int& N)
+void push(t_list sp[], string data, int& N)
 {
     int temp;
     int j;
@@ -63,12 +63,12 @@ void push(t_list sp[], int data, int& N)
     }
 }
 
-void pop(t_list* sp, int data, int& N)
+void pop(t_list* sp, string data, int& N)
 {
     int i = 0;
     int j;
 
-    while (sp[i].data != data && sp[i].data != -1 && i < N)
+    while (sp[i].data != data && sp[i].data[0] != '\0' && i < N)
         i++;
 
     if (sp[i].data == data)
@@ -94,52 +94,12 @@ void print(t_list sp[], int N)
     cout << endl;
 }
 
-bool getNumber(int* i)
-{
-    bool flag = true;
-    while (flag)
-    {
-        flag = false;
-        string str;
-        cin >> str;
-
-        if (str[0] == '0')
-        {
-            cout << "Invalid entry \nRepeat entry\n->";
-            flag = true;
-        }
-        else for (char c : str)
-        {
-            if (c < '0' || c > '9')
-            {
-                
-                break;
-            }
-        }
-
-        if (flag == false)
-        {
-            try
-            {
-                *i = stoi(str);
-            }
-            catch (out_of_range)
-            {
-                cout << "Invalid entry \ntoo large value \nRepeat entry\n->";
-                flag = true;
-            }
-
-        }
-    }
-    return flag;
-}
-
 void main()
 {
     t_list sp[SIZE];
     int N = 0;
     char a;
-    int data;
+    string data;
 
     zeroing(sp);
     while (true) {
@@ -170,7 +130,7 @@ void main()
                 else
                 {
                     cout << "Enter element: ";
-                    if (!getNumber(&data))
+                    cin >> data;
                         push(sp, data, N);
                 }
                 break;
@@ -180,7 +140,7 @@ void main()
                 else
                 {
                     cout << "Enter element: ";
-                    if (!getNumber(&data))
+                    cin >> data;
                         pop(sp, data, N);
                 }
                 break;
