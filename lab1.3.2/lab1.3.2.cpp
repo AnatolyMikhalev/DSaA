@@ -63,24 +63,22 @@ void push(t_list sp[], int data, int& N)
     }
 }
 
-void pop(t_list* sp, int& First, int& N)
+void pop(t_list* sp, int data, int& N)
 {
-    if (queue_empty(N) == 1)
+    int i = 0;
+    int j;
+
+    while (sp[i].data != data && sp[i].data != -1 && i < N)
+        i++;
+
+    if (sp[i].data == data)
     {
-        cout << "Queue is empty" << endl;
-    }
-    else
-    {
-        cout << "Removed - " << sp[First].data << endl;
-        sp[First].data = 0;
-        if (First == SIZE - 1)
+        while (i < N)
         {
-            First = 0;
+            sp[i].data = sp[i + 1].data;
+            i++;
         }
-        else
-        {
-            First++;
-        }
+        sp[N].data = -1;
         N--;
     }
 }
@@ -104,12 +102,17 @@ bool getNumber(int* i)
         flag = false;
         string str;
         cin >> str;
-        for (char c : str)
+
+        if (str[0] == '0')
+        {
+            cout << "Invalid entry \nRepeat entry\n->";
+            flag = true;
+        }
+        else for (char c : str)
         {
             if (c < '0' || c > '9')
             {
-                std::cout << "Invalid entry \nRepeat entry\n->";
-                flag = true;
+                
                 break;
             }
         }
@@ -134,8 +137,6 @@ bool getNumber(int* i)
 void main()
 {
     t_list sp[SIZE];
-    int First = 0;
-    int Last = 0;
     int N = 0;
     char a;
     int data;
@@ -157,40 +158,35 @@ void main()
             {
             case '1':
                 if (queue_empty(N) == 0)
-                {
                     cout << "Queue is full" << endl;
-                }
                 else if (queue_empty(N) == 1)
-                {
                     cout << "Queue is empty" << endl;
-                }
                 else
-                {
                     cout << "Queue isn't empty" << endl;
-                }
                 break;
             case '2':
                 if (queue_empty(N) == 0)
-                {
                     cout << "Queue is full" << endl;
-                }
                 else
                 {
                     cout << "Enter element: ";
                     if (!getNumber(&data))
-                    {
                         push(sp, data, N);
-                    }
                 }
                 break;
             case '3':
-                pop(sp, First, N);
+                if (queue_empty(N) == 1)
+                    cout << "Queue is empty" << endl;
+                else
+                {
+                    cout << "Enter element: ";
+                    if (!getNumber(&data))
+                        pop(sp, data, N);
+                }
                 break;
             case '4':
                 if (queue_empty(N) == 1)
-                {
                     cout << "Queue is empty" << endl;
-                }
                 else print(sp, N);
                 break;
             }
