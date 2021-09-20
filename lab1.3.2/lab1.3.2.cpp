@@ -3,7 +3,7 @@
 #include <stdio.h>;
 #include <iostream>
 #include <string>
-#define SIZE 10
+#define SIZE 3
 
 using namespace std;
 
@@ -17,7 +17,7 @@ void zeroing(t_list sp[])
     int i = 0;
     while (i < SIZE)
     {
-        sp[i].data = -1;
+        sp[i].data = "-1";
         i++;
     }
 }
@@ -34,6 +34,62 @@ int queue_empty(int N)
     }
     else if (N == SIZE) {
         return 0;
+    }
+}
+
+/*void isnumber(string data)
+{
+    bool flag = true;
+    while (flag)
+    {
+        flag = false;
+        string str;
+        cin >> str;
+        for (char c : str)
+        {
+            if (c < '0' || c >'9')
+            {
+                std::cout << "неверный ввод\nповторите ввод\n->";
+                flag = true;
+                break;
+            }
+        }
+
+        if (flag == false)
+        {
+            try
+            {
+                *i = stoi(str);
+            }
+            catch (out_of_range)
+            {
+                cout << "неверный ввод\nслишком большое значение\nповторите ввод\n->";
+                flag = true;
+            }
+
+        }
+    }
+    return flag;
+}*/
+
+int ft_strcmp(string str1, string str2)
+{
+    for (int i = 0; ; i++)
+    {
+        if (str1[i] == '\0')
+        {
+            return -1;
+        }
+
+        if (str2[i] == '\0')
+        {
+            return 1;
+        }
+
+        if (str1[i] != str2[i])
+        {
+            return str1[i] < str2[i] ? -1 : 1;
+        }
     }
 }
 
@@ -63,24 +119,24 @@ void push(t_list sp[], string data, int& N)
     }
 }
 
-void pop(t_list* sp, string data, int& N)
+void pop(t_list* sp, string data, int &N)
 {
     int i = 0;
     int j;
 
-    while (sp[i].data != data && sp[i].data[0] != '\0' && i < N)
+    while (sp[i].data != data && sp[i].data != "-1" && i < SIZE)
         i++;
 
     if (sp[i].data == data)
     {
-        while (i < N)
+        while (i < N - 1)
         {
             sp[i].data = sp[i + 1].data;
             i++;
         }
-        sp[N].data = -1;
-        N--;
+        sp[N - 1].data = "-1";
     }
+    N--;
 }
 
 void print(t_list sp[], int N)
@@ -131,7 +187,7 @@ void main()
                 {
                     cout << "Enter element: ";
                     cin >> data;
-                        push(sp, data, N);
+                    push(sp, data, N);
                 }
                 break;
             case '3':
@@ -141,7 +197,7 @@ void main()
                 {
                     cout << "Enter element: ";
                     cin >> data;
-                        pop(sp, data, N);
+                    pop(sp, data, N);
                 }
                 break;
             case '4':
