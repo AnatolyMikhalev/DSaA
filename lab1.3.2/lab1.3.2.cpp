@@ -3,7 +3,7 @@
 #include <stdio.h>;
 #include <iostream>
 #include <string>
-#define SIZE 3
+#define SIZE 5
 
 using namespace std;
 
@@ -72,23 +72,49 @@ int queue_empty(int N)
     return flag;
 }*/
 
+int ft_isNumber(string str)
+{
+    int isd = 1;
+    int i = 0;
+    while (str[i] != '\0')
+    {
+        if (!isdigit(str[i]))
+        {
+            return 0;
+            i++;
+        }
+        i++;
+    }
+    return 1;
+}
+
 int ft_strcmp(string str1, string str2)
 {
-    for (int i = 0; ; i++)
+    if (ft_isNumber(str1) && ft_isNumber(str2))
     {
-        if (str1[i] == '\0')
+        if (str1.length() != str2.length())
         {
-            return -1;
+            return str1.length() < str2.length() ? -1 : 1;
         }
-
-        if (str2[i] == '\0')
+        else
         {
-            return 1;
+            for (int i = 0; ; i++)
+            {
+                if (str1[i] != str2[i])
+                    return str1[i] < str2[i] ? -1 : 1;
+            }
         }
-
-        if (str1[i] != str2[i])
+    }
+    else
+    {
+        for (int i = 0; ; i++)
         {
-            return str1[i] < str2[i] ? -1 : 1;
+            if (str1[i] == '\0')
+                return -1;
+            if (str2[i] == '\0')
+                return 1;
+            if (str1[i] != str2[i])
+                return str1[i] < str2[i] ? -1 : 1;
         }
     }
 }
@@ -106,7 +132,7 @@ void push(t_list sp[], string data, int& N)
     }
     else
     {
-        while (sp[i].data <= data && i < N)
+        while (ft_strcmp(sp[i].data, data) == -1 && i < N)
             i++;
         j = N;
         while (j > i)
