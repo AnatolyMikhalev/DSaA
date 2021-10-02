@@ -37,41 +37,6 @@ int queue_empty(int N)
     }
 }
 
-/*void isnumber(string data)
-{
-    bool flag = true;
-    while (flag)
-    {
-        flag = false;
-        string str;
-        cin >> str;
-        for (char c : str)
-        {
-            if (c < '0' || c >'9')
-            {
-                std::cout << "неверный ввод\nповторите ввод\n->";
-                flag = true;
-                break;
-            }
-        }
-
-        if (flag == false)
-        {
-            try
-            {
-                *i = stoi(str);
-            }
-            catch (out_of_range)
-            {
-                cout << "неверный ввод\nслишком большое значение\nповторите ввод\n->";
-                flag = true;
-            }
-
-        }
-    }
-    return flag;
-}*/
-
 int ft_isNumber(string str)
 {
     int isd = 1;
