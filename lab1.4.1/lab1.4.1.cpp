@@ -1,4 +1,4 @@
-﻿//     Реализовать линейный динамический двунаправленный список со следующим набором операций :
+﻿//7.     Реализовать линейный динамический двунаправленный список со следующим набором операций :
 //     •	просмотр списка в прямом и обратном направлениях
 //     •	поиск заданного элемента в прямом и обратном направлениях
 //     •	добавление элемента перед или после заданного
@@ -66,37 +66,24 @@ void push_after(string data, string elem)
 
 void push_before(string data, string elem)
 {
-	node* temp;
-	node* curr;
-	temp = new node();
-	temp->Data = data;
-	curr = pHead;
-
 	if (list_empty())
 	{
-		curr->prev = temp;
-		curr->next = temp;
-		temp->prev = curr;
-		temp->next = curr;
+		cout << "Operation \"insert before\" cannot be applied to an empty list" << endl;
 	}
 	else
 	{
+		node* temp;
+		node* curr;
+		temp = new node();
+		temp->Data = data;
+		curr = pHead;
+
 		while (curr->next != pHead && curr->next->Data != elem)
 			curr = curr->next;
-		if (curr->next == pHead)
-		{
-			temp->next = pHead;
-			temp->prev = curr;
-			curr->next = temp;
-			pHead->prev = temp;
-		}
-		else
-		{
-			temp->next = curr->next;
-			temp->prev = curr;
-			curr->next->prev = temp;
-			curr->next = temp;
-		}
+		temp->next = curr->next;
+		temp->prev = curr;
+		curr->next->prev = temp;
+		curr->next = temp;
 	}
 }
 
@@ -140,24 +127,24 @@ void print()
 		}
 		switch (choice)
 		{
-			case 0:
-				curr = pHead->next;
-				while (curr != pHead)
-				{
-					cout << curr->Data << " ";
-					curr = curr->next;
-				}
-				cout << endl;
-				break;
-			case 1:
-				curr = pHead->prev;
-				while (curr != pHead)
-				{
-					cout << curr->Data << " ";
-					curr = curr->prev;
-				}
-				cout << endl;
-				break;
+		case 0:
+			curr = pHead->next;
+			while (curr != pHead)
+			{
+				cout << curr->Data << " ";
+				curr = curr->next;
+			}
+			cout << endl;
+			break;
+		case 1:
+			curr = pHead->prev;
+			while (curr != pHead)
+			{
+				cout << curr->Data << " ";
+				curr = curr->prev;
+			}
+			cout << endl;
+			break;
 		}
 	}
 }
@@ -175,11 +162,12 @@ int main()
 	a = '0';
 	while (a != 'q') {
 
-		cout << endl;
+		cout << "--------------------------------------" << endl;
 		cout << "Check for empty......................1" << endl;
 		cout << "Add element..........................2" << endl;
 		cout << "Delete element.......................3" << endl;
 		cout << "Print list...........................4" << endl;
+		cout << "--------------------------------------" << endl;
 
 		cin >> c;
 
@@ -193,13 +181,9 @@ int main()
 			{
 			case 1:
 				if (list_empty())
-				{
 					cout << "List is empty" << endl;
-				}
 				else
-				{
 					cout << "List isn't empty" << endl;
-				}
 				break;
 			case 2:
 				cout << "Enter element: ";
@@ -215,9 +199,7 @@ int main()
 				break;
 			case 3:
 				if (list_empty())
-				{
 					cout << "List is empty" << endl;
-				}
 				else
 				{
 					cout << "Enter element: ";
