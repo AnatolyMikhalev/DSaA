@@ -13,7 +13,8 @@ struct node
     node* next;
 };
 
-int queue_empty(node* pFirst) {
+int queue_empty(node* pFirst) 
+{
     if (pFirst == NULL)
     {
         return 1;
@@ -24,11 +25,13 @@ int queue_empty(node* pFirst) {
     }
 }
 
-void push(node** pFirst, node** pLast, char data) {
+void push(node** pFirst, node** pLast, char data) 
+{
     node* temp;
     temp = new node();
     temp->Data = data;
     temp->next = NULL;
+
     if (queue_empty(*pFirst)) {
         *pFirst = temp;
         *pLast = temp;
@@ -40,7 +43,8 @@ void push(node** pFirst, node** pLast, char data) {
     }
 }
 
-void pop(node** pFirst) {
+void pop(node** pFirst) 
+{
     if (queue_empty(*pFirst))
     {
         cout << "Queue is empty" << endl;
@@ -56,7 +60,8 @@ void pop(node** pFirst) {
 
 }
 
-void print(node* pFirst) {
+void print(node* pFirst) 
+{
     node* temp = pFirst;
     if (queue_empty(pFirst))
     {
@@ -73,48 +78,53 @@ void print(node* pFirst) {
     }
 }
 
-void modeling(node **pFirst, node **pLast) {
+void modeling(node **pFirst, node **pLast) 
+{
     cout << "\nQUEUE MODELING\n";
     char key = '\0';
     char symbol;
     int n, x; 
+
     cout << "Press <q> to quit the queue simulation mode\n";
-    while (key != 'q') {
-        Sleep(2);
+
+    while (key != 'q') 
+    {
         if (queue_empty(*pFirst)) x = 1; 
         else x = (rand() % 100 % 2 == 0);
 
-        if (x == 1) {
-            n = rand() % 3 + 1;
+        if (_kbhit())
+            key = _getch();
+        if (key == 'q') break;
 
-            if (_kbhit()) 
-                key = _getch();
-            if (key == 'q') break;
-                cout << "\nGeneration and addition " << n << " item(s) to queue\n";
+        if (x == 1) 
+        {
+            n = rand() % 4 + 1;
+
+            cout << "\nGeneration and addition " << n << " item(s) to queue\n";
+
             Sleep(800);
-            for (int i = 0; i < n; i++) {
+
+            for (int i = 0; i < n; i++) 
+            {
                 symbol = static_cast<char>(65 + rand() % 26);
                 push(pFirst, pLast, symbol);
             }
         }
-        else { 
+        else 
+        { 
             n = rand() % 4 + 1; 
-//            n = rand() % 4 + 1;
-            if (_kbhit()) 
-                key = _getch(); 
-            if (key == 'q') break;
-            cout << "\nRemoval " << n << " item (s) from the queue...\n";
+//          n = rand() % 4 + 1;
+
+            cout << "\nRemoval " << n << " item(s) from the queue...\n";
             Sleep(800);
             for (int i = 0; i < n; i++)
                 if (!queue_empty(*pFirst))
                     pop(pFirst);
         }
         cout << "Press <q> to quit the queue simulation mode\n";
-        if (_kbhit())
-            key = _getch(); 
-        if (key == 'q') break;
+
         cout << "Queue state: ";
-        if (_kbhit()) key = _getch();
+
         print(*pFirst);
     }
 }

@@ -63,10 +63,12 @@ int ft_strcmp(string str1, string str2)
         }
         else
         {
-            for (int i = 0; ; i++)
+            for (int i = 0; i < str1.length(); i++)
             {
                 if (str1[i] != str2[i])
                     return str1[i] < str2[i] ? -1 : 1;
+                if (str1[i] == '\0')
+                    return 0;
             }
         }
     }
@@ -151,10 +153,12 @@ void main()
     zeroing(sp);
     while (true) {
 
+        cout << "--------------------------------------" << endl;
         cout << "Check for empty......................1" << endl;
         cout << "Add element..........................2" << endl;
         cout << "Delete element.......................3" << endl;
         cout << "Print queue..........................4" << endl;
+        cout << "--------------------------------------" << endl;
 
         cin >> a;
         if (a < '1' || a > '4')
