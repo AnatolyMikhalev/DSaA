@@ -51,16 +51,16 @@ void Forward(Tp* pCurrent, int level) { //обход в прямом напра�
 	}
 }
 
-void Symmetric(Tp* pCurrent, int level) { //симметричный обход
+void Back_Symmetric(Tp* pCurrent, int level) { //симметричный обход
 	if (pCurrent != NULL) {
-		Symmetric(pCurrent->Left, level + 1); //обработка  всех левых поддеревьев
+		Back_Symmetric(pCurrent->Right, level + 1); //обработка  всех правых поддеревьев
 
 		string str; //обработка корневой вершины pCurrent
 		for (int i = 0; i < level; i++)
 			str += "     ";
 		cout << " " << str << pCurrent->value << "\n";
 
-		Symmetric(pCurrent->Right, level + 1); //обработка  всех правых поддеревьев
+		Back_Symmetric(pCurrent->Left, level + 1); //обработка  всех левых поддеревьев
 	}
 }
 
@@ -110,7 +110,7 @@ int main()
 			Forward(pRoot, 0);
 
 			cout << "\n Line output in symmetric order:\n\n";
-			Symmetric(pRoot, 0);
+			Back_Symmetric(pRoot, 0);
 
 			cout << "\n Line output in reverse order:\n\n";
 			Back(pRoot, 0);
