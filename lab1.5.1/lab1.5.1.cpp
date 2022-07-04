@@ -13,20 +13,22 @@ using namespace std;
 
 int N; //количество вершин в дереве
 
-//ОПИСАНИЕ СТРУКТУРЫ ДЕРЕВА TreePoint
-struct Tp {
+struct Tp 
+{
 	int value; //описание информационной части
 	Tp* Left; //переменная-указатель на левый элемент
 	Tp* Right; //переменная-указатель на правый элемент
 } *pRoot; //глобальная переменная для корневой вершины.
 
 
-Tp* AddNodes(Tp* pCurrent, int aN) { //ДОБАВЛЕНИЕ ВЕРШИН (ПОСТРОЕНИЕ ИСД)
+Tp* AddNodes(Tp* pCurrent, int aN) 
+{ 
 	Tp* pTemp;
 	int Nl, Nr;
 	if (aN == 0)  // если нет вершин для размещения
 		return NULL; // формируем пустую ссылку
-	else {
+	else 
+	{
 		Nl = aN / 2; //число вершин слева
 		Nr = aN - Nl - 1; //число вершин справа
 		pTemp = new Tp; //создаем корень поддерева, выделяем память
@@ -39,7 +41,8 @@ Tp* AddNodes(Tp* pCurrent, int aN) { //ДОБАВЛЕНИЕ ВЕРШИН (ПОС
 }
 
 
-void Forward(Tp* pCurrent, int level) { //обход в прямом направлении
+void Forward(Tp* pCurrent, int level) //обход в прямом направлении
+{ 
 	if (pCurrent != NULL) {
 		string str; //обработка корневой вершины pCurrent
 		for (int i = 0; i < level; i++)
@@ -47,12 +50,15 @@ void Forward(Tp* pCurrent, int level) { //обход в прямом напра�
 		cout << " " << str << pCurrent->value << "\n";
 
 		Forward(pCurrent->Left, level + 1); //обработка  всех левых поддеревьев
+
 		Forward(pCurrent->Right, level + 1); //обработка  всех правых поддеревьев
 	}
 }
 
-void Symmetric(Tp* pCurrent, int level) { //симметричный обход
-	if (pCurrent != NULL) {
+void Symmetric(Tp* pCurrent, int level) //симметричный обход
+{ 
+	if (pCurrent != NULL) 
+	{
 		Symmetric(pCurrent->Left, level + 1); //обработка  всех левых поддеревьев
 
 		string str; //обработка корневой вершины pCurrent
@@ -64,8 +70,10 @@ void Symmetric(Tp* pCurrent, int level) { //симметричный обход
 	}
 }
 
-void Back_Symmetric(Tp* pCurrent, int level) {//обратный обход
-	if (pCurrent != NULL) {
+void Back_Symmetric(Tp* pCurrent, int level)//обратно-симметричный обход
+{
+	if (pCurrent != NULL) 
+	{
 		Back_Symmetric(pCurrent->Right, level + 1); //обработка  всех правых поддеревьев
 
 		string str; //обработка корневой вершины
@@ -77,8 +85,10 @@ void Back_Symmetric(Tp* pCurrent, int level) {//обратный обход
 	}
 }
 
-void Clean(Tp* pCurrent) {
-	if (pCurrent != NULL) {
+void Clean(Tp* pCurrent) 
+{
+	if (pCurrent != NULL) 
+	{
 		Clean(pCurrent->Left);
 		Clean(pCurrent->Right);
 		delete pCurrent;
@@ -87,8 +97,6 @@ void Clean(Tp* pCurrent) {
 
 int main()
 {
-
-	setlocale(LC_ALL, "Rus");
 	srand(time(NULL));
 	cout << "Randomizer initialized" << endl;
 
@@ -102,9 +110,7 @@ int main()
 			cout << "Incorrect value" << endl;
 		else
 		{
-
 			pRoot = AddNodes(pRoot, N);
-			cout << " ИДЕАЛЬНО СБАЛАНСИРОВАННОЕ ДЕРЕВО С ЧИСЛОМ ВЕРШИН '" << N << "' СОЗДАНО\n";
 
 			cout << "\n Line output in direct order:\n\n";
 			Forward(pRoot, 0);
@@ -112,11 +118,10 @@ int main()
 			cout << "\n Line output in symmetric order:\n\n";
 			Symmetric(pRoot, 0);
 
-			cout << "\n Line output in reverse order:\n\n";
+			cout << "\n Line output in back-symmetric order:\n\n";
 			Back_Symmetric(pRoot, 0);
 
 			Clean(pRoot);
-
 		}
 	}
 }

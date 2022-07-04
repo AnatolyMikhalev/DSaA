@@ -261,7 +261,6 @@ Tp* DeleteNode(Tp* pCurrent, int value)
 
 int main()
 {
-	setlocale(LC_ALL, "Rus");
 	srand(time(NULL));
 	cout << "Randomizer initialized" << endl;
 

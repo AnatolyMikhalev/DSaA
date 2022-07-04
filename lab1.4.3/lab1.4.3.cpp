@@ -150,7 +150,6 @@ void pushInMainEmptySublist(string data)
 	}
 }
 
-
 void pushInMain(string data)
 {
 	MainList* curr;
