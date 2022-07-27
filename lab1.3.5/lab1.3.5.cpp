@@ -41,7 +41,6 @@ void push_after(string data, string elem)
 	
 	temp->next = curr->next;
 	curr->next = temp;
-	
 }
 
 void push_before(string data, string elem)

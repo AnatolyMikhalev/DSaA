@@ -6,7 +6,8 @@
 
 using namespace std;
 
-int queue_empty(int N) {
+int queue_empty(int N) 
+{
     if (N == 0)
     {
         return 1;
@@ -19,15 +20,19 @@ int queue_empty(int N) {
         return 0;
     }
 }
+
 void push(int sp[], int& Last, int data, int& N) {
-    if (queue_empty(N) == 0) {
+    if (queue_empty(N) == 0) 
+    {
         cout << "Очередь заполнена" << endl;
     }
-    else if (N == 0) {
+    else if (N == 0) 
+    {
         sp[Last] = data;
         N++;
     }
-    else {
+    else 
+    {
         if (Last == 9) {
             Last = 0;
         }
@@ -40,7 +45,8 @@ void push(int sp[], int& Last, int data, int& N) {
 }
 
 
-void pop(int* sp, int& First, int& N) {
+void pop(int* sp, int& First, int& N) 
+{
     if (queue_empty(N) == 1) {
         cout << "Очередь пуста" << endl;
     }
@@ -58,7 +64,8 @@ void pop(int* sp, int& First, int& N) {
     }
 }
 
-void print(int sp[], int First, int Last) {
+void print(int sp[], int First, int Last)
+{
 
     while (First != Last)
     {
@@ -75,6 +82,7 @@ void print(int sp[], int First, int Last) {
     }
     cout << endl;
 }
+
 bool getNumber(int* i)
 {
     bool flag = true;
